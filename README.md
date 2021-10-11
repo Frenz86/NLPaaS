@@ -5,20 +5,6 @@
     - Summarization: http://localhost:8080/api/v1/summary/docs
 
 
-<a id='section03'></a>
-
-## Project Details
-
-<a id='section03a'></a>
-
-### Demonstration
-
-<p align="center">
-<img alt="Project Insight Demo" src="meta/streamlit-NLPfiy.gif">
-</p>
-
-<a id='section03b'></a>
-
 ### Directory Details
 
 * **Front End**: Front end code is in the `src_streamlit` folder. Along with the `Dockerfile` and `requirements.txt`
