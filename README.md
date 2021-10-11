@@ -1,8 +1,11 @@
 **Access to Fastapi Documentation**: Since this is a microservice based design, every NLP task has its own seperate documentation
-    - News Classification: http://localhost:8080/api/v1/classification/docs
-    - Sentiment Analysis: http://localhost:8080/api/v1/sentiment/docs
-    - NER: http://localhost:8080/api/v1/ner/docs
-    - Summarization: http://localhost:8080/api/v1/summary/docs
+- News Classification: http://localhost:8080/api/v1/classification/docs
+
+- Sentiment Analysis: http://localhost:8080/api/v1/sentiment/docs
+
+- NER: http://localhost:8080/api/v1/ner/docs
+
+- Summarization: http://localhost:8080/api/v1/summary/docs
 
 
 ### Directory Details
@@ -74,5 +77,3 @@
             self.model = BertClass()
             self.tokenizer = BertTokenizerFast.from_pretrained(self.path)
         ```
-
-<a id='section04'></a>
