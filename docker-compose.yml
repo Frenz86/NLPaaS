@@ -4,33 +4,24 @@ services:
   classification:
     build: ./src_fastapi/classification
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./src_fastapi/classification/:/app/
     ports:
       - 8001:8000
     networks:
       - deploy_network
     container_name: classification
 
-
-
   sentiment:
     build: ./src_fastapi/sentiment
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./src_fastapi/sentiment/:/app/
     ports:
       - 8002:8000
     networks:
       - deploy_network
     container_name: sentiment
 
-
   summary:
     build: ./src_fastapi/summary
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./src_fastapi/summary/:/app/
     ports:
       - 8003:8000
     networks:
@@ -40,13 +31,21 @@ services:
   ner:
     build: ./src_fastapi/ner
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./src_fastapi/ner/:/app/
     ports:
       - 8004:8000
     networks:
       - deploy_network
     container_name: ner
+
+  streamlit_fe:
+    build: ./src_streamlit
+    command: streamlit run app.py
+    ports: 
+        - 8501:8501
+    networks:
+      - deploy_network
+    container_name: streamlit_fe
+
 
   nginx:
     image: nginx:latest
@@ -59,20 +58,10 @@ services:
       - sentiment
       - summary
       - ner
+      - streamlit_fe
     networks:
       - deploy_network
     container_name: nginx
-
-  streamlit:
-    build: ./src_streamlit
-    depends_on:
-      - nginx
-    ports: 
-        - 8501:8501
-    networks:
-      - deploy_network
-    container_name: streamlit
-
 
 networks:
   deploy_network:

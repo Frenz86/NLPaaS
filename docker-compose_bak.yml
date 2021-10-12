@@ -1,0 +1,80 @@
+#Montando i volumi, in questo caso i file dei modelli rimanevano anche in locale.
+version: '3.7'
+
+services:
+  classification:
+    build: ./src_fastapi/classification
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src_fastapi/classification/:/app/
+    ports:
+      - 8001:8000
+    networks:
+      - deploy_network
+    container_name: classification
+
+
+
+  sentiment:
+    build: ./src_fastapi/sentiment
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src_fastapi/sentiment/:/app/
+    ports:
+      - 8002:8000
+    networks:
+      - deploy_network
+    container_name: sentiment
+
+
+  summary:
+    build: ./src_fastapi/summary
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src_fastapi/summary/:/app/
+    ports:
+      - 8003:8000
+    networks:
+      - deploy_network
+    container_name: summary
+
+  ner:
+    build: ./src_fastapi/ner
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src_fastapi/ner/:/app/
+    ports:
+      - 8004:8000
+    networks:
+      - deploy_network
+    container_name: ner
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx_config.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - classification
+      - sentiment
+      - summary
+      - ner
+      - streamlit
+    networks:
+      - deploy_network
+    container_name: nginx
+
+  streamlit:
+    build: ./src_streamlit
+    command: streamlit run app.py
+    ports: 
+        - 8501:8501
+    networks:
+      - deploy_network
+    container_name: streamlit
+
+
+networks:
+  deploy_network:
+    driver: bridge

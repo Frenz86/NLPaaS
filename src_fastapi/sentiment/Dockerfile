@@ -9,4 +9,4 @@ RUN pip install -r /app/requirements.txt \
 
 COPY . /app/
 
-CMD ["./download_model.sh"]
+RUN ["./download_model.sh"]
