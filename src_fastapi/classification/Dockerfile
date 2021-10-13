@@ -9,4 +9,4 @@ RUN pip install -r /app/requirements.txt \
 
 COPY . /app/
 
-RUN ["./download_model.sh"]
+RUN sudo ./download_model.sh
