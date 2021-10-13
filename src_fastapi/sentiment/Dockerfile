@@ -9,4 +9,6 @@ RUN pip install -r /app/requirements.txt \
 
 COPY . /app/
 
-RUN ["./download_model.sh"]
+#google cloud permission
+RUN chmod +x download_model.sh
+RUN ./download_model.sh
