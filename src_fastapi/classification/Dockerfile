@@ -9,4 +9,7 @@ RUN pip install -r /app/requirements.txt \
 
 COPY . /app/
 
+#google cloud permission
 RUN sudo ./download_model.sh
+
+
